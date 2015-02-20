@@ -3,7 +3,7 @@
 # Read in the data file
 dat <- read.delim("./raw_data/Sub1.txt") 
 head(dat)
-View(dat)
+#View(dat)
 
 # Basic data import, label, and concatenate loop
 dat1 <- read.delim("./raw_data/Sub1.txt")
@@ -48,14 +48,14 @@ grep("Merc", row.names(mtcars), value=T)
 dat$race = NA
 # Where FaceFilename contains "Black", we set dat$race to "black"
 dat$race[grep("Black", dat$FaceFilename)] = "Black"
-View(dat)
+#View(dat)
 dat$race[grep("White", dat$FaceFilename)] = "White"
-View(dat)
+#View(dat)
 
 # We can do a similar thing to fix the point of fixation
-forehead_range = c(1:8)
-eyes_range = c(9:16)
-nose_range = c(17:24)
+forehead_range = c(1:8,25:32)
+eyes_range = c(9:16,33:40)
+nose_range = c(17:24,41:48)
 
 dat$fixation = NA # empty container
 for (i in forehead_range) {
@@ -67,7 +67,7 @@ for (i in eyes_range) {
 for (i in nose_range) {
   dat$fixation[grep(i, dat$FaceFilename)] = "nose"
 } # not a problem now because it won't match 21 to 1
-View(dat)
+#View(dat)
 sub2dat = dat[dat$ID == 2,]
 table(sub2dat$fixation, sub2dat$Block)
 
