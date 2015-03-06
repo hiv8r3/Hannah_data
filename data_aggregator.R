@@ -1,4 +1,5 @@
-# Welcome! To data aggregator!
+ # Welcome! To data aggregator!
+# bug on line 69
 
 # Read in the data file
 dat <- read.delim("./raw_data/Sub1.txt") 
@@ -53,9 +54,9 @@ dat$race[grep("White", dat$FaceFilename)] = "White"
 #View(dat)
 
 # We can do a similar thing to fix the point of fixation
-forehead_range = c(1:8,25:32)
-eyes_range = c(9:16,33:40)
-nose_range = c(17:24,41:48)
+forehead_range = c(1:8)
+eyes_range = c(9:16)
+nose_range = c(17:24)
 
 dat$fixation = NA # empty container
 for (i in forehead_range) {
@@ -69,6 +70,27 @@ for (i in nose_range) {
 } # not a problem now because it won't match 21 to 1
 #View(dat)
 sub2dat = dat[dat$ID == 2,]
+table(sub2dat$fixation, sub2dat$Block)
+
+
+#fixing Block 3 fixation data now
+
+# We can do a similar thing to fix the point of fixation
+forehead_range = c(1:8,25:32)
+eyes_range = c(9:16,33:40)    #9 is taking 29 from forehead
+nose_range = c(17:24,41:48)
+
+for (i in forehead_range) {
+  dat$fixation[grepl(i, dat$FaceFilename) & dat$Block ==3] = "forehead"
+} # note that this will still match 1 with 11, 21, but we're gonna fix those later
+#grepl returns T/F instead of number of row so that it works with & function
+for (i in eyes_range) {
+  dat$fixation[grepl(i, dat$FaceFilename) & dat$Block ==3] = "eyes"
+}
+for (i in nose_range) {
+  dat$fixation[grepl(i, dat$FaceFilename) & dat$Block ==3] = "nose"
+} 
+
 table(sub2dat$fixation, sub2dat$Block)
 
 # export data for analysis
